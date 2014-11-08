@@ -77,7 +77,7 @@ while($nextPage != ""){
 	$emichi = json_decode(file_get_contents($url));
 	$nextPage = $emichi -> {'nextPageToken'};
     if($_POST["type"] == 3){
-      if($pageCount > 20){
+      if($pageCount > 26){
         foreach($emichi -> {'items'} as $data){
             $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
             if(!empty($data -> {'object'} -> {'attachments'})){
@@ -98,7 +98,7 @@ while($nextPage != ""){
         }
       }
     }elseif($_POST["type"] == 2){
-      if($pageCount > 10){
+      if($pageCount > 13){
         foreach($emichi -> {'items'} as $data){
             $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
             if(!empty($data -> {'object'} -> {'attachments'})){
@@ -141,8 +141,8 @@ while($nextPage != ""){
     }
 }
 
-echo "<p class='cyui'>※API制限防止の為すべての画像は表示していません。なお、保存はすべての画像を行っています。</p>";
-echo "<p>総画像枚数：{$count}枚</p>";
+//echo "<p class='cyui'>※API制限防止の為すべての画像は表示していません。なお、保存はすべての画像を行っています。</p>";
+//echo "<p>総画像枚数：{$count}枚</p>";
 ?>
 </div>
 </div>
