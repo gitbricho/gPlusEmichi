@@ -28,13 +28,24 @@
 <div id="wrapper">
   <div id="cover" class="clearfix">
     <div id="mainLeft">
-    <p id="title">Whom do you save?</p>
-    <h2>Google+のユーザIDを入力してください。すべての画像を保存します。</h2>
-    <form action="imageGet.php" method="post">
-      <input type="text" name="userID" value="101590036846564916771">
-      <input type="checkbox" name="old"><label>古い写真を取得する<small>（新しい写真を取得せずに古い写真を取得するようにがんばります）</small></label>
-      <input type="submit" value="画像保存！">
-    </form>
+    <p id="title">Who do you save?</p>
+    <h2>Google+のユーザIDを入力してください。すべての画像を保存します。<br>保存は非常に時間がかかります。コーヒーなどを飲みながら気長に待ちましょう。</h2>
+    <div id="formBox">
+      <form action="imageGet.php" method="post">
+        <input type="text" id="userId" name="userID" value="101590036846564916771">
+        <p id="default">（初期値は上枝恵美加のIDです）</p>
+        <div id="type" class="clearfix">
+          <input type="radio" name="type" id="select1" value="1" checked="">
+          <label for="select1">通常</label>
+          <input type="radio" name="type" id="select2" value="2">
+          <label for="select2">古い写真を取得する</label>
+          <input type="radio" name="type" id="select3" value="3">
+          <label for="select3">もっと古い写真を取得する</label>
+        </div>
+        
+        <input type="submit" id="saveBt" value="画像保存！">
+      </form>
+    </div>
     </div>
     <div id="mainRight"><img src="images/bord.png" alt="画像はimagesフォルダに保存されるよ！"></div>
   </div>

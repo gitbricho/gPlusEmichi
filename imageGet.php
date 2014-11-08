@@ -28,15 +28,13 @@ $(window).load(function(){
 </head>
 <body>
 <header>
-
+  <h1><a href="index.php">えみちの画像 一気に保存します!<br><small>（メンバーのGoogle+の画像 一気に保存しちゃいます！）</small></a></h1>
 </header>
 <div id="wrapper">
 <div class="Collage">
 <?php 
 $count = 0;
 $pageCount = 0;
-$imageDirectory = "kamiedaEmika";
-//$userId = "101590036846564916771"; //101590036846564916771
 $userId = $_POST["userID"]; //101590036846564916771
 $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
 $emichi = json_decode(file_get_contents($url));
@@ -49,7 +47,6 @@ foreach($emichi -> {'items'} as $data){
 $imageDirectory = $name;
 $direct = "./images/" . $imageDirectory;
 mkdir($direct, 0700);
-
 foreach($emichi -> {'items'} as $data){
 	$datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
 	if(!empty($data -> {'object'} -> {'attachments'})){
@@ -79,19 +76,36 @@ while($nextPage != ""){
 	$url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
 	$emichi = json_decode(file_get_contents($url));
 	$nextPage = $emichi -> {'nextPageToken'};
-    if($_POST["old"]){
-      if($pageCount > 13){
+    if($_POST["type"] == 3){
+      if($pageCount > 20){
         foreach($emichi -> {'items'} as $data){
             $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
             if(!empty($data -> {'object'} -> {'attachments'})){
                 foreach($data -> {'object'} -> {'attachments'} as $data2){
                     if($data2 -> {'image'} -> {'url'} != ""){
-                      //sleep(0.21);
                       $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
                       $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-                      //echo "<a href='" . $fullUrl . "'>";
-                      //echo "<img src='" . $url . "' />";
-                      //echo "</a>";
+                      $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
+                      $yahoo = curl_init();
+                      curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
+                      curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
+                      $data = curl_exec($yahoo);
+                      file_put_contents($dlUrl, $data);
+                      curl_close($yahoo);
+                    }
+                }
+            }
+        }
+      }
+    }elseif($_POST["type"] == 2){
+      if($pageCount > 10){
+        foreach($emichi -> {'items'} as $data){
+            $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
+            if(!empty($data -> {'object'} -> {'attachments'})){
+                foreach($data -> {'object'} -> {'attachments'} as $data2){
+                    if($data2 -> {'image'} -> {'url'} != ""){
+                      $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
+                      $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
                       $count++;
                       $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
                       $yahoo = curl_init();
@@ -111,13 +125,8 @@ while($nextPage != ""){
           if(!empty($data -> {'object'} -> {'attachments'})){
               foreach($data -> {'object'} -> {'attachments'} as $data2){
                   if($data2 -> {'image'} -> {'url'} != ""){
-                    //sleep(0.21);
                     $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
                     $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-                    //echo "<a href='" . $fullUrl . "'>";
-                    //echo "<img src='" . $url . "' />";
-                    //echo "</a>";
-                    $count++;
                     $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
                     $yahoo = curl_init();
                     curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
@@ -138,7 +147,7 @@ echo "<p>総画像枚数：{$count}枚</p>";
 </div>
 </div>
 <footer>
-  <p id="copyright">CopyRight(C) 2013-2014 kix All Rights Reserved.</p>
+  <p id="copyright">CopyRight(C) 2014 kix All Rights Reserved.</p>
 </footer>
 </body>
 </html>
