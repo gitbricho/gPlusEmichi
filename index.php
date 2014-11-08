@@ -11,13 +11,8 @@
 
 </style>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="jquery.collagePlus.min.js"></script>
 <script type="text/javascript">
-$(window).load(function(){
-	$('.Collage').collagePlus({
-		'effect' : 'effect-5',
-	});
-});
+
 </script>
 <style>
 header{
