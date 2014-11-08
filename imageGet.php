@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <link rel="stylesheet" type="text/css" href="css/transitions.css">
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Google+の画像一気に保存しちゃいます！</title>
 <style>
 
@@ -22,12 +23,6 @@ $(window).load(function(){
 <style>
 .Collage{
 	margin:50px 0 0 0;
-}
-header{
-	position: fixed;
-	top: 0;
-	height: 50px;
-	z-index: 2;
 }
 </style>
 </head>
