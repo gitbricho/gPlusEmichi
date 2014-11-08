@@ -52,7 +52,7 @@ foreach($emichi -> {'items'} as $data){
   break;
 }
 $imageDirectory = $name;
-$direct = "./" . $imageDirectory;
+$direct = "./images/" . $imageDirectory;
 mkdir($direct, 0700);
 
 foreach($emichi -> {'items'} as $data){
@@ -67,7 +67,7 @@ foreach($emichi -> {'items'} as $data){
               echo "<img src='" . $url . "' />";
               echo "</a>";
               $count++;
-              $dlUrl = $imageDirectory . "/" . $datetime . ".jpg";
+              $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
               $yahoo = curl_init();
               curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
               curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
@@ -98,7 +98,7 @@ while($nextPage != ""){
                       //echo "<img src='" . $url . "' />";
                       //echo "</a>";
                       $count++;
-                      $dlUrl = $imageDirectory . "/" . $datetime . ".jpg";
+                      $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
                       $yahoo = curl_init();
                       curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
                       curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
@@ -123,7 +123,7 @@ while($nextPage != ""){
                     //echo "<img src='" . $url . "' />";
                     //echo "</a>";
                     $count++;
-                    $dlUrl = $imageDirectory . "/" . $datetime . ".jpg";
+                    $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
                     $yahoo = curl_init();
                     curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
                     curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
