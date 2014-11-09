@@ -78,7 +78,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
   foreach($apiData -> {'items'} as $data){
     $count = 0;
-    $datetime = str_replace(array('T','Z','/',':'),array('/','','_','-'),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
+    $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
         if(!empty($data2 -> {'image'} -> {'url'})){
@@ -88,8 +88,6 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
             if(!file_exists($dlUrl)){
               if(!empty($data2 -> {'fullImage'} -> {'url'})){
                 $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
-                $fullUrlType = mb_convert_encoding($data2 -> {'fullImage'} -> {'type'}, "UTF-8" , "auto");
-                $returnText .= $fullUrlType . "<br>";
               }
               if($typeFlag == 1){
                 //$url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
@@ -98,14 +96,14 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 
               }
               $returnText .= $dlUrl . "の画像を保存しました<br>";
-              $returnText .= mb_convert_encoding($data2 -> {'objectType'}, "UTF-8" , "auto") . "<br>";
-
-              $imgData = curl_init();
-              curl_setopt($imgData, CURLOPT_URL, $fullUrl);
-              curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
-              $data = curl_exec($imgData);
-              file_put_contents($dlUrl, $data);
-              curl_close($imgData);
+              if(mb_convert_encoding($data2 -> {'objectType'}, "UTF-8" , "auto") == "photo"){
+                $imgData = curl_init();
+                curl_setopt($imgData, CURLOPT_URL, $fullUrl);
+                curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+                $data = curl_exec($imgData);
+                file_put_contents($dlUrl, $data);
+                curl_close($imgData);
+              }
             }
           }
         }
