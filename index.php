@@ -8,7 +8,7 @@
 <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<title>Google+の画像一気に保存しちゃいます！</title>
+<title>えみちの画像 一気に保存します!メンバーのGoogle+の画像 一気に保存しちゃいます！）</title>
 <style>
 
 </style>

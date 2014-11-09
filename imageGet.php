@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="css/transitions.css">
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<title>Google+の画像一気に保存しちゃいます！</title>
+<title>えみちの画像 一気に保存します!メンバーのGoogle+の画像 一気に保存しちゃいます！）</title>
 <style>
 
 </style>
@@ -20,129 +20,77 @@ $(window).load(function(){
 	});
 });
 </script>
-<style>
-.Collage{
-	margin:50px 0 0 0;
-}
-</style>
 </head>
 <body>
 <header>
   <h1><a href="index.php">えみちの画像 一気に保存します!<br><small>（メンバーのGoogle+の画像 一気に保存しちゃいます！）</small></a></h1>
 </header>
 <div id="wrapper">
+<div id="name" class="clearfix"><p id="member">上枝恵美加の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。</p></div>
 <div class="Collage">
 <?php 
 $count = 0;
 $pageCount = 0;
-$userId = $_POST["userID"]; //101590036846564916771
+$userId = $_POST["userID"];
 $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
 $emichi = json_decode(file_get_contents($url));
 $nextPage = $emichi -> {'nextPageToken'};
-//print_r($emichi);
 foreach($emichi -> {'items'} as $data){
   $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, "UTF-8", auto);
   break;
 }
+/*フォルダ作成*/
 $imageDirectory = $name;
 $direct = "./images/" . $imageDirectory;
 mkdir($direct, 0700);
-foreach($emichi -> {'items'} as $data){
-	$datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
-	if(!empty($data -> {'object'} -> {'attachments'})){
-		foreach($data -> {'object'} -> {'attachments'} as $data2){
-			if($data2 -> {'image'} -> {'url'} != ""){
-              //sleep(0.21);
-              $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
-              $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-              echo "<a href='" . $fullUrl . "'>";
-              echo "<img src='" . $url . "' />";
-              echo "</a>";
-              $count++;
-              $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
-              $yahoo = curl_init();
-              curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
-              curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
-              $data = curl_exec($yahoo);
-              file_put_contents($dlUrl, $data);
-              curl_close($yahoo);
-			}
-		}
-	}
-}
+/*1回目呼び出し（最新画像100件･表示あり）*/
+echo gplusSave($emichi,1);
 
 while($nextPage != ""){
-    $pageCount++;
-	$url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
-	$emichi = json_decode(file_get_contents($url));
-	$nextPage = $emichi -> {'nextPageToken'};
-    if($_POST["type"] == 3){
-      if($pageCount > 26){
-        foreach($emichi -> {'items'} as $data){
-            $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
-            if(!empty($data -> {'object'} -> {'attachments'})){
-                foreach($data -> {'object'} -> {'attachments'} as $data2){
-                    if($data2 -> {'image'} -> {'url'} != ""){
-                      $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
-                      $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-                      $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
-                      $yahoo = curl_init();
-                      curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
-                      curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
-                      $data = curl_exec($yahoo);
-                      file_put_contents($dlUrl, $data);
-                      curl_close($yahoo);
-                    }
-                }
-            }
-        }
-      }
-    }elseif($_POST["type"] == 2){
-      if($pageCount > 13){
-        foreach($emichi -> {'items'} as $data){
-            $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
-            if(!empty($data -> {'object'} -> {'attachments'})){
-                foreach($data -> {'object'} -> {'attachments'} as $data2){
-                    if($data2 -> {'image'} -> {'url'} != ""){
-                      $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
-                      $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-                      $count++;
-                      $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
-                      $yahoo = curl_init();
-                      curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
-                      curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
-                      $data = curl_exec($yahoo);
-                      file_put_contents($dlUrl, $data);
-                      curl_close($yahoo);
-                    }
-                }
-            }
-        }
-      }
-    }else{
-      foreach($emichi -> {'items'} as $data){
-          $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
-          if(!empty($data -> {'object'} -> {'attachments'})){
-              foreach($data -> {'object'} -> {'attachments'} as $data2){
-                  if($data2 -> {'image'} -> {'url'} != ""){
-                    $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
-                    $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-                    $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
-                    $yahoo = curl_init();
-                    curl_setopt($yahoo, CURLOPT_URL, $fullUrl);
-                    curl_setopt($yahoo, CURLOPT_RETURNTRANSFER, true);
-                    $data = curl_exec($yahoo);
-                    file_put_contents($dlUrl, $data);
-                    curl_close($yahoo);
-                  }
-              }
-          }
-      }
+  $pageCount++;
+  $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
+  $emichi = json_decode(file_get_contents($url));
+  $nextPage = $emichi -> {'nextPageToken'};
+  if($_POST["type"] == 3){
+    if($pageCount > 26){
+      echo gplusSave($emichi,0);
     }
+  }elseif($_POST["type"] == 2){
+    if($pageCount > 13){
+      echo gplusSave($emichi,0);
+    }
+  }else{
+    echo gplusSave($emichi,0);
+  }
 }
 
 //echo "<p class='cyui'>※API制限防止の為すべての画像は表示していません。なお、保存はすべての画像を行っています。</p>";
 //echo "<p>総画像枚数：{$count}枚</p>";
+function gplusSave($apiDate,$typeFlag){
+  $returnText = "";
+  foreach($apiDate -> {'items'} as $data){
+    $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
+    if(!empty($data -> {'object'} -> {'attachments'})){
+      foreach($data -> {'object'} -> {'attachments'} as $data2){
+        if($data2 -> {'image'} -> {'url'} != ""){
+          $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
+          $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
+          if($typeFlag == 1){
+            $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+          }
+          $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
+          $imgData = curl_init();
+          curl_setopt($imgData, CURLOPT_URL, $fullUrl);
+          curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+          $data3 = curl_exec($imgData);
+          file_put_contents($dlUrl, $data3);
+          curl_close($imgData);
+        }
+      }
+    }
+  }
+  return $returnText;
+}
 ?>
 </div>
 </div>
