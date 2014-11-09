@@ -35,7 +35,7 @@ $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/pub
 $emichi = json_decode(file_get_contents($url));
 $nextPage = $emichi -> {'nextPageToken'};
 foreach($emichi -> {'items'} as $data){
-  $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, "UTF-8", auto);
+  $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, "UTF-8", "auto");
   break;
 }
 /*フォルダ作成*/
@@ -56,38 +56,41 @@ while($nextPage != ""){
   $nextPage = $emichi -> {'nextPageToken'};
   if($_POST["type"] == 3){ //もっと古い画像を保存
     if($pageCount > 26){
-      //gplusSave($emichi,0,$imageDirectory);
+      gplusSave($emichi,0,$imageDirectory);
     }
   }elseif($_POST["type"] == 2){ //古い画像を保存
     if($pageCount > 13){
-      //gplusSave($emichi,0,$imageDirectory);
+      gplusSave($emichi,0,$imageDirectory);
     }
   }else{
-    //gplusSave($emichi,0,$imageDirectory);
+    gplusSave($emichi,0,$imageDirectory);
   }
 }
 
-//echo "<p class='cyui'>※API制限防止の為すべての画像は表示していません。なお、保存はすべての画像を行っています。</p>";
-//echo "<p>総画像枚数：{$count}枚</p>";
 function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
   foreach($apiData -> {'items'} as $data){
-    $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
+    $count = 0;
+    $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
         if($data2 -> {'image'} -> {'url'} != ""){
-          $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , auto);
-          $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , auto);
-          if($typeFlag == 1){
-            $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+          $count++;
+          $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $count . ".jpg";
+          if(!file_exists($dlUrl)){
+            $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
+            if($typeFlag == 1){
+              $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
+              $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+            }
+
+            $imgData = curl_init();
+            curl_setopt($imgData, CURLOPT_URL, $fullUrl);
+            curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+            $data = curl_exec($imgData);
+            file_put_contents($dlUrl, $data);
+            curl_close($imgData);
           }
-          $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
-          $imgData = curl_init();
-          curl_setopt($imgData, CURLOPT_URL, $fullUrl);
-          curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
-          $data = curl_exec($imgData);
-          file_put_contents($dlUrl, $data);
-          curl_close($imgData);
         }
       }
     }
