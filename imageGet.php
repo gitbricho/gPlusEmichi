@@ -41,7 +41,9 @@ foreach($emichi -> {'items'} as $data){
 /*フォルダ作成*/
 $imageDirectory = $name;
 $direct = "./images/" . $imageDirectory;
-mkdir($direct, 0700);
+if(!file_exists($direct)){
+  mkdir($direct, 0700);
+}
 ?>
 <div id="name" class="clearfix"><p id="member"><?php echo $name; ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
 <div class="Collage">
@@ -50,10 +52,14 @@ mkdir($direct, 0700);
 echo gplusSave($emichi,1,$imageDirectory);
 
 while($nextPage != ""){
-  $pageCount++;
-  $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=" . $maxResults . "&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
+  $pageCount ++;
+  if(!empty($nextPage)){
+    $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=" . $maxResults . "&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
+  }
   $emichi = json_decode(file_get_contents($url));
-  $nextPage = $emichi -> {'nextPageToken'};
+  if(!empty($emichi -> {'nextPageToken'})){
+    $nextPage = $emichi -> {'nextPageToken'};
+  }
   if($_POST["type"] == 3){ //もっと古い画像を保存
     if($pageCount > 26){
       gplusSave($emichi,0,$imageDirectory);
@@ -74,22 +80,27 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
     $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
-        if($data2 -> {'image'} -> {'url'} != ""){
-          $count++;
-          $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $count . ".jpg";
-          if(!file_exists($dlUrl)){
-            $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
-            if($typeFlag == 1){
-              $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
-              $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
-            }
+        if(!empty($data2 -> {'image'} -> {'url'})){
+          if($data2 -> {'image'} -> {'url'} != ""){
+            $count++;
+            $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $count . ".jpg";
+            if(!file_exists($dlUrl)){
+              if(!empty($data2 -> {'fullImage'} -> {'url'})){
+                $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
+              }
+              if($typeFlag == 1){
+                $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
+                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+              }
 
-            $imgData = curl_init();
-            curl_setopt($imgData, CURLOPT_URL, $fullUrl);
-            curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
-            $data = curl_exec($imgData);
-            file_put_contents($dlUrl, $data);
-            curl_close($imgData);
+              $imgData = curl_init();
+              curl_setopt($imgData, CURLOPT_URL, $fullUrl);
+              curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+              $data = curl_exec($imgData);
+              file_put_contents($dlUrl, $data);
+              curl_close($imgData);
+              echo "ファイルサイズ" . filesize($dlUrl) . "<br>";
+            }
           }
         }
       }
