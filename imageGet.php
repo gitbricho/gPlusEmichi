@@ -46,8 +46,7 @@ if(!file_exists($direct)){
 }
 ?>
 <div id="name" class="clearfix"><p id="member"><?php echo $name; ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
-<!--<div class="Collage">-->
-<div id="logText">
+<div class="Collage">
 <?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
 echo gplusSave($emichi,1,$imageDirectory);
@@ -63,14 +62,14 @@ while($nextPage != ""){
   }
   if($_POST["type"] == 3){ //もっと古い画像を保存
     if($pageCount > 26){
-      //echo gplusSave($emichi,0,$imageDirectory);
+      echo gplusSave($emichi,0,$imageDirectory);
     }
   }elseif($_POST["type"] == 2){ //古い画像を保存
     if($pageCount > 13){
-      //echo gplusSave($emichi,0,$imageDirectory);
+      echo gplusSave($emichi,0,$imageDirectory);
     }
   }else{ //通常保存
-    //echo gplusSave($emichi,0,$imageDirectory);
+    echo gplusSave($emichi,0,$imageDirectory);
   }
 }
 
@@ -90,12 +89,12 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
               }
               if($typeFlag == 1){
-                //$url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
-                //$returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+                $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
+                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
               }else{
                 
               }
-              $returnText .= $dlUrl . "の画像を保存しました<br>";
+              //$returnText .= $dlUrl . "の画像を保存しました<br>";
               if(mb_convert_encoding($data2 -> {'objectType'}, "UTF-8" , "auto") == "photo"){
                 $imgData = curl_init();
                 curl_setopt($imgData, CURLOPT_URL, $fullUrl);
