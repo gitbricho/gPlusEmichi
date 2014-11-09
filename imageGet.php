@@ -29,7 +29,7 @@ $(window).load(function(){
 <?php 
 $count = 0;
 $pageCount = 0;
-$maxResults = 1;
+$maxResults = 100;
 $userId = $_POST["userID"];
 $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
 $emichi = json_decode(file_get_contents($url));
@@ -69,9 +69,9 @@ while($nextPage != ""){
 
 //echo "<p class='cyui'>※API制限防止の為すべての画像は表示していません。なお、保存はすべての画像を行っています。</p>";
 //echo "<p>総画像枚数：{$count}枚</p>";
-function gplusSave($apiDate,$typeFlag,$imageDirectory){
+function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
-  foreach($apiDate -> {'items'} as $data){
+  foreach($apiData -> {'items'} as $data){
     $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
@@ -85,8 +85,8 @@ function gplusSave($apiDate,$typeFlag,$imageDirectory){
           $imgData = curl_init();
           curl_setopt($imgData, CURLOPT_URL, $fullUrl);
           curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
-          $data3 = curl_exec($imgData);
-          file_put_contents($dlUrl, $data3);
+          $data = curl_exec($imgData);
+          file_put_contents($dlUrl, $data);
           curl_close($imgData);
         }
       }
