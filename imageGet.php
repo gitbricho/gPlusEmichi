@@ -33,7 +33,6 @@ $maxResults = 100;
 $userId = $_POST["userID"];
 $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
 $emichi = json_decode(file_get_contents($url));
-print_r($emichi);
 $nextPage = $emichi -> {'nextPageToken'};
 foreach($emichi -> {'items'} as $data){
   $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, "UTF-8", "auto");
@@ -63,14 +62,14 @@ while($nextPage != ""){
   }
   if($_POST["type"] == 3){ //もっと古い画像を保存
     if($pageCount > 26){
-      echo gplusSave($emichi,0,$imageDirectory);
+      //echo gplusSave($emichi,0,$imageDirectory);
     }
   }elseif($_POST["type"] == 2){ //古い画像を保存
     if($pageCount > 13){
-      echo gplusSave($emichi,0,$imageDirectory);
+      //echo gplusSave($emichi,0,$imageDirectory);
     }
-  }else{
-    echo gplusSave($emichi,0,$imageDirectory);
+  }else{ //通常保存
+    //echo gplusSave($emichi,0,$imageDirectory);
   }
 }
 
@@ -88,6 +87,8 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
             if(!file_exists($dlUrl)){
               if(!empty($data2 -> {'fullImage'} -> {'url'})){
                 $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
+                $fullUrlType = mb_convert_encoding($data2 -> {'fullImage'} -> {'type'}, "UTF-8" , "auto");
+                $returnText .= $fullUrlType . "<br>";
               }
               if($typeFlag == 1){
                 $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
@@ -95,6 +96,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
               }else{
                 $returnText .= $dlUrl . "の画像を保存しました<br>";
               }
+              $returnText .= mb_convert_encoding($data2 -> {'objectType'}, "UTF-8" , "auto") . "<br>";
 
               $imgData = curl_init();
               curl_setopt($imgData, CURLOPT_URL, $fullUrl);
