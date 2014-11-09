@@ -163,6 +163,16 @@ h2{
   width: 800px;
   font-size: 70%;
 }
+#logText{
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 75%;
+  height: 500px;
+  overflow: scroll;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
 footer{
   padding: 5px;
   background: -moz-linear-gradient(left,  rgba(45,45,45,0) 0%, rgba(45,45,45,0) 24%, rgba(24,24,24,0) 60%, rgba(0,0,0,0.5) 100%); /* FF3.6+ */

@@ -46,7 +46,8 @@ if(!file_exists($direct)){
 }
 ?>
 <div id="name" class="clearfix"><p id="member"><?php echo $name; ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
-<div class="Collage">
+<!--<div class="Collage">-->
+<div id="logText">
 <?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
 echo gplusSave($emichi,1,$imageDirectory);
@@ -77,7 +78,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
   foreach($apiData -> {'items'} as $data){
     $count = 0;
-    $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
+    $datetime = str_replace(array('T','Z','/',':'),array('/','','_','-'),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
         if(!empty($data2 -> {'image'} -> {'url'})){
@@ -91,11 +92,12 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 $returnText .= $fullUrlType . "<br>";
               }
               if($typeFlag == 1){
-                $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
-                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+                //$url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "auto");
+                //$returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
               }else{
-                $returnText .= $dlUrl . "の画像を保存しました<br>";
+                
               }
+              $returnText .= $dlUrl . "の画像を保存しました<br>";
               $returnText .= mb_convert_encoding($data2 -> {'objectType'}, "UTF-8" , "auto") . "<br>";
 
               $imgData = curl_init();
