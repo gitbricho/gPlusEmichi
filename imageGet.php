@@ -26,11 +26,10 @@ $(window).load(function(){
   <h1><a href="index.php">えみちの画像 一気に保存します!<br><small>（メンバーのGoogle+の画像 一気に保存しちゃいます！）</small></a></h1>
 </header>
 <div id="wrapper">
-<div id="name" class="clearfix"><p id="member">上枝恵美加の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。</p></div>
-<div class="Collage">
 <?php 
 $count = 0;
 $pageCount = 0;
+$maxResults = 1;
 $userId = $_POST["userID"];
 $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
 $emichi = json_decode(file_get_contents($url));
@@ -43,30 +42,34 @@ foreach($emichi -> {'items'} as $data){
 $imageDirectory = $name;
 $direct = "./images/" . $imageDirectory;
 mkdir($direct, 0700);
+?>
+<div id="name" class="clearfix"><p id="member"><?php echo $name; ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
+<div class="Collage">
+<?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
-echo gplusSave($emichi,1);
+echo gplusSave($emichi,1,$imageDirectory);
 
 while($nextPage != ""){
   $pageCount++;
-  $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
+  $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=" . $maxResults . "&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
   $emichi = json_decode(file_get_contents($url));
   $nextPage = $emichi -> {'nextPageToken'};
-  if($_POST["type"] == 3){
+  if($_POST["type"] == 3){ //もっと古い画像を保存
     if($pageCount > 26){
-      echo gplusSave($emichi,0);
+      //gplusSave($emichi,0,$imageDirectory);
     }
-  }elseif($_POST["type"] == 2){
+  }elseif($_POST["type"] == 2){ //古い画像を保存
     if($pageCount > 13){
-      echo gplusSave($emichi,0);
+      //gplusSave($emichi,0,$imageDirectory);
     }
   }else{
-    echo gplusSave($emichi,0);
+    //gplusSave($emichi,0,$imageDirectory);
   }
 }
 
 //echo "<p class='cyui'>※API制限防止の為すべての画像は表示していません。なお、保存はすべての画像を行っています。</p>";
 //echo "<p>総画像枚数：{$count}枚</p>";
-function gplusSave($apiDate,$typeFlag){
+function gplusSave($apiDate,$typeFlag,$imageDirectory){
   $returnText = "";
   foreach($apiDate -> {'items'} as $data){
     $datetime = str_replace(array('T','Z','/',''),array('/','','_','_'),mb_convert_encoding($data -> {'updated'}, "UTF-8", auto));
