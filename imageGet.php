@@ -27,6 +27,9 @@ $(window).load(function(){
 </header>
 <div id="wrapper">
 <?php 
+set_time_limit(0); //タイムアウト防止
+echo str_pad('',1); //ブラウザタイムアウト防止
+flush();
 $count = 0;
 $pageCount = 0;
 $maxResults = 100;
