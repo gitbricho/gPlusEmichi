@@ -79,8 +79,9 @@ while($nextPage != ""){
 
 //picasa画像取得
 if($_POST["destination"] == 1){
-  picasaSave($userId,$imageDirectory);
+  //picasaSave($userId,$imageDirectory);
 }
+picasaSave($userId,$imageDirectory);
 
 function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
