@@ -52,8 +52,9 @@ if(!file_exists($direct)){
 <div class="Collage">
 <?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
-echo gplusSave($emichi,1,$imageDirectory);
+//echo gplusSave($emichi,1,$imageDirectory);
 
+/*
 while($nextPage != ""){
   $pageCount ++;
   if(!empty($nextPage)){
@@ -75,18 +76,19 @@ while($nextPage != ""){
     echo gplusSave($emichi,0,$imageDirectory);
   }
 }
+*/
+//picasa画像取得
+picasaSave($userId,$imageDirectory);
 
 function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
   foreach($apiData -> {'items'} as $data){
-    $count = 0;
     $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"),mb_convert_encoding($data -> {'updated'}, "UTF-8", "auto"));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
         if(!empty($data2 -> {'image'} -> {'url'})){
           if($data2 -> {'image'} -> {'url'} != ""){
-            $count++;
-            $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $count . ".jpg";
+            $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . ".jpg";
             if(!file_exists($dlUrl)){
               if(!empty($data2 -> {'fullImage'} -> {'url'})){
                 $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
@@ -113,6 +115,49 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
     }
   }
   return $returnText;
+}
+function picasaSave($userId,$imageDirectory){
+  $picasaUrl = 'https://picasaweb.google.com/data/feed/api/user/' . $userId;
+  $picasaXml = file_get_contents($picasaUrl);
+  $picasaXml = simplexml_load_string($picasaXml);
+  foreach($picasaXml as $picasaData){
+    $nameSpaces = $picasaData -> getNamespaces(true);
+    $gNode = $picasaData -> children($nameSpaces['gphoto']);
+    if($gNode -> id != ""){
+      $picasaUrl2 = "https://picasaweb.google.com/data/feed/api/user/" . $userId . "/albumid/" . $gNode -> id;
+      $picasaXml2 = file_get_contents($picasaUrl2);
+      $picasaXml2 = simplexml_load_string($picasaXml2);
+      $saveDate = (string) $picasaXml2 -> updated;
+      $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"), $saveDate );
+      print "<strong>" . $datetime . "</strong><br>"; //画像更新日時
+      foreach($picasaXml2 -> entry as $picasaData2){
+        $imgUrl = Array();
+        $imgUrl = explode("/",$picasaData2 -> content -> attributes() -> src);
+        $countArray = 0;
+        $imgUrlAB = "";
+        foreach($imgUrl as $imgUrlAA){
+          $imgUrlAB .= $imgUrlAA . "/";
+          $countArray ++;
+          if($countArray == 7){
+            $imgUrlAB .= "s0/";
+          }
+        }
+        $imgSaveUrl = substr($imgUrlAB, 0, -1);
+        //print "<img src='" .  . "' width=300>";
+        $count++;
+        $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $count . ".jpg";
+        if(!file_exists($dlUrl)){
+          $imgData = curl_init();
+          curl_setopt($imgData, CURLOPT_URL, $imgSaveUrl);
+          curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+          $data = curl_exec($imgData);
+          file_put_contents($dlUrl, $data);
+          curl_close($imgData);
+        }
+      }
+    }
+  }
+  return 0;
 }
 ?>
 </div>
