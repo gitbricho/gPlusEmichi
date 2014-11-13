@@ -24,6 +24,7 @@ background: linear-gradient(to bottom,  #2d2d2d 24%,#005991 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2d2d', endColorstr='#005991',GradientType=0 ); /* IE6-9 */
   color: #fff;
   min-height: 100%;
+  font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 }
 header{
   background: #0af;
