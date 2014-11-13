@@ -90,7 +90,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
         if(!empty($data2 -> {'image'} -> {'url'})){
           if($data2 -> {'image'} -> {'url'} != ""){
-            $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . ".jpg";
+            $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
             if(!file_exists($dlUrl)){
               if(!empty($data2 -> {'fullImage'} -> {'url'})){
                 $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "auto");
