@@ -52,9 +52,9 @@ if(!file_exists($direct)){
 <div class="Collage">
 <?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
-//echo gplusSave($emichi,1,$imageDirectory);
+echo gplusSave($emichi,1,$imageDirectory);
 
-/*
+
 while($nextPage != ""){
   $pageCount ++;
   if(!empty($nextPage)){
@@ -76,9 +76,11 @@ while($nextPage != ""){
     echo gplusSave($emichi,0,$imageDirectory);
   }
 }
-*/
+
 //picasa画像取得
-picasaSave($userId,$imageDirectory);
+if($_POST["destination"] == 1){
+  picasaSave($userId,$imageDirectory);
+}
 
 function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
@@ -129,12 +131,13 @@ function picasaSave($userId,$imageDirectory){
       $picasaXml2 = simplexml_load_string($picasaXml2);
       $saveDate = (string) $picasaXml2 -> updated;
       $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"), $saveDate );
-      print "<strong>" . $datetime . "</strong><br>"; //画像更新日時
+      $saveCount = 1;
+      //print "<strong>" . $datetime . "</strong><br>"; //画像更新日時
       foreach($picasaXml2 -> entry as $picasaData2){
         $imgUrl = Array();
         $imgUrl = explode("/",$picasaData2 -> content -> attributes() -> src);
-        $countArray = 0;
         $imgUrlAB = "";
+        $countArray = 0;
         foreach($imgUrl as $imgUrlAA){
           $imgUrlAB .= $imgUrlAA . "/";
           $countArray ++;
@@ -143,9 +146,9 @@ function picasaSave($userId,$imageDirectory){
           }
         }
         $imgSaveUrl = substr($imgUrlAB, 0, -1);
-        //print "<img src='" .  . "' width=300>";
-        $count++;
-        $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $count . ".jpg";
+        print $imgSaveUrl;
+        print "<a href='" . $imgSaveUrl . "' target='_blank'><img src='" . $imgSaveUrl . "' width=300></a>";
+        $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $saveCount . ".jpg";
         if(!file_exists($dlUrl)){
           $imgData = curl_init();
           curl_setopt($imgData, CURLOPT_URL, $imgSaveUrl);
@@ -154,10 +157,11 @@ function picasaSave($userId,$imageDirectory){
           file_put_contents($dlUrl, $data);
           curl_close($imgData);
         }
+        $saveCount ++;
       }
     }
   }
-  return 0;
+  return null;
 }
 ?>
 </div>

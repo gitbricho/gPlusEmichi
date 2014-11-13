@@ -42,6 +42,12 @@
           <input type="radio" name="type" id="select3" value="3">
           <label for="select3">もっと古い写真を取得する</label>
         </div>
+        <div id="type2" class="clearfix">
+          <input type="radio" name="destination" id="select1" value="1" checked="">
+          <label for="select1">Picasaアルバムも取得する<br><small>アルバム内の複数の写真も取得します</small></label>
+          <input type="radio" name="destination" id="select2" value="2">
+          <label for="select2">Google+のみ取得する<br><small>複数写真のアルバムは取得しません</small></label>
+        </div>
         
         <input type="submit" id="saveBt" value="画像保存！">
       </form>
