@@ -54,6 +54,11 @@ if(!file_exists($direct)){
 /*1回目呼び出し（最新画像100件･表示あり）*/
 echo gplusSave($emichi,1,$imageDirectory);
 
+//picasa画像取得
+if($_POST["destination"] == 1){
+  //picasaSave($userId,$imageDirectory);
+}
+picasaSave($userId,$imageDirectory);
 
 while($nextPage != ""){
   $pageCount ++;
@@ -76,12 +81,6 @@ while($nextPage != ""){
     echo gplusSave($emichi,0,$imageDirectory);
   }
 }
-
-//picasa画像取得
-if($_POST["destination"] == 1){
-  //picasaSave($userId,$imageDirectory);
-}
-picasaSave($userId,$imageDirectory);
 
 function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
