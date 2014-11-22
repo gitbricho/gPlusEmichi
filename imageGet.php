@@ -145,7 +145,7 @@ function picasaSave($userId,$imageDirectory){
           }
         }
         $imgSaveUrl = substr($imgUrlAB, 0, -1);
-        print $imgSaveUrl;
+        //print $imgSaveUrl;
         print "<a href='" . $imgSaveUrl . "' target='_blank'><img src='" . $imgSaveUrl . "' width=300></a>";
         $dlUrl = "images/" . $imageDirectory . "/" . $datetime . "_" . $saveCount . ".jpg";
         if(!file_exists($dlUrl)){
