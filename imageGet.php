@@ -25,7 +25,7 @@ $(window).load(function(){
 <header>
   <h1><a href="index.php">えみちの画像 一気に保存します!<br><small>（メンバーのGoogle+の画像 一気に保存しちゃいます！）</small></a></h1>
 </header>
-<div id="wrapper">
+<div id="wrapper" class="Collage">
 <?php 
 set_time_limit(0); //タイムアウト防止
 echo str_pad('',1); //ブラウザタイムアウト防止
