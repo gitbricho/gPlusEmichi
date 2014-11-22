@@ -56,9 +56,8 @@ echo gplusSave($emichi,1,$imageDirectory);
 
 //picasa画像取得
 if($_POST["destination"] == 1){
-  //picasaSave($userId,$imageDirectory);
+  picasaSave($userId,$imageDirectory);
 }
-picasaSave($userId,$imageDirectory);
 
 while($nextPage != ""){
   $pageCount ++;
