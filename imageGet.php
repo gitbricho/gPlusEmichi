@@ -123,7 +123,9 @@ function picasaSave($userId,$imageDirectory){
   $picasaXml = simplexml_load_string($picasaXml);
   foreach($picasaXml as $picasaData){
     $nameSpaces = $picasaData -> getNamespaces(true);
-    $gNode = $picasaData -> children($nameSpaces['gphoto']);
+    if($picasaData -> children($nameSpaces['gphoto']) != ""){
+      $gNode = $picasaData -> children($nameSpaces['gphoto']);
+    }
     if($gNode -> id != ""){
       $picasaUrl2 = "https://picasaweb.google.com/data/feed/api/user/" . $userId . "/albumid/" . $gNode -> id;
       $picasaXml2 = file_get_contents($picasaUrl2);
