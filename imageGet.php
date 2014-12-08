@@ -1,11 +1,11 @@
 <?php
+error_reporting(0);
 $osFlag = "";
 if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
   $osFlag = "SJIS";
 } else {
   $osFlag = "UTF-8";
 }
-echo $osFlag;
 ?>
 <!doctype html>
 <html lang="jp">
@@ -16,7 +16,7 @@ echo $osFlag;
 <link rel="stylesheet" type="text/css" href="css/transitions.css">
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-<title>えみちの画像 一気に保存します!メンバーのGoogle+の画像 一気に保存しちゃいます！）</title>
+<title>えみちの画像 一気に保存します!（メンバーのGoogle+の画像 一気に保存しちゃいます！）</title>
 <style>
 
 </style>
@@ -91,6 +91,12 @@ while($nextPage != ""){
 }
 
 function gplusSave($apiData,$typeFlag,$imageDirectory){
+  $osFlag = "";
+  if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
+    $osFlag = "SJIS";
+  } else {
+    $osFlag = "UTF-8";
+  }
   $returnText = "";
   foreach($apiData -> {'items'} as $data){
     $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"),mb_convert_encoding($data -> {'updated'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS"));
@@ -127,6 +133,12 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
   return $returnText;
 }
 function picasaSave($userId,$imageDirectory){
+  $osFlag = "";
+  if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
+    $osFlag = "SJIS";
+  } else {
+    $osFlag = "UTF-8";
+  }
   $picasaUrl = 'https://picasaweb.google.com/data/feed/api/user/' . $userId;
   $picasaXml = file_get_contents($picasaUrl);
   $picasaXml = simplexml_load_string($picasaXml);

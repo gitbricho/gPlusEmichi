@@ -57,7 +57,7 @@
   </div>
 </div>
 <footer>
-  <p id="copyright">CopyRight(C) 2014 kix All Rights Reserved.</p>
+  <p id="copyright">G+･Picasa両方を取得するため、重複して画像が保存される場合があります。　　CopyRight(C) 2014 kix All Rights Reserved.</p>
 </footer>
 </body>
 </html>
