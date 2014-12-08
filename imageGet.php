@@ -5,6 +5,7 @@ if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
 } else {
   $osFlag = "UTF-8";
 }
+echo $osFlag;
 ?>
 <!doctype html>
 <html lang="jp">
