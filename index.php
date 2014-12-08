@@ -30,7 +30,6 @@
     <div id="mainLeft">
     <p id="title">Who do you save?</p>
     <h2>Google+のユーザIDを入力してください。すべての画像を保存します。<br>保存は非常に時間がかかります。コーヒーなどを飲みながら気長に待ちましょう。</h2>
-    <h2><a href="gDrive.php">ドライブ認証</a></h2>
     <div id="formBox">
       <form action="imageGet.php" method="post">
         <input type="text" id="userId" name="userID" value="101590036846564916771">
@@ -60,56 +59,5 @@
 <footer>
   <p id="copyright">CopyRight(C) 2014 kix All Rights Reserved.</p>
 </footer>
-<?php
-try {
-    // ライブラリ読み込み
-    require_once('./src/Google/Client.php');
-    // Google Drive
-    require_once('./src/Google/Service/Drive.php');
- 
-    // 認証
-    session_start();
-    $client = new Google_Client();
-    $client->setAccessToken($_SESSION['token']);
-    $service = new Google_Service_Drive($client);
- 
-    // 親ディレクトリ
-    // root でマイドライブ, root 以外は名前ではなく ID を指定
-    $parents = 'root';
-    if (isset($_GET['parents'])) {
-        $parents = htmlspecialchars($_GET['parents'], ENT_QUOTES);
-    }
-    // 次ページに移動する場合に渡すトークン
-    $pageToken = null;
-    if (isset($_GET['pageToken'])) {
-        $pageToken = $_GET['pageToken'];
-    }
-    $parameters = array('q' => "'{$parents}' in parents", 'maxResults' => 20);
-    if ($pageToken) {
-        $parameters['pageToken'] =$pageToken;
-    }
-    // ファイルリスト取得, Google_Service_Drive_FileList のオブジェクトが返ってくる
-    $files = $service->files->listFiles($parameters);
-    // ファイルの一覧データ
-    $results = $files->getItems();
-    // 次ページのトークン取得, ない場合は NULL
-    $pageToken = $files->getNextPageToken();
-    // 結果表示
-    foreach ($results as $result) {
-        // フォルダだったらリンクに
-        if ($result->mimeType === 'application/vnd.google-apps.folder') {
-            echo '<a href="http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?parents='.urlencode($result->id).'">フォルダ ： '.$result->title.'</a><br />';
-        } else {
-            echo "ファイル ： {$result->title}<br />";
-        }
-    }
-    // pageToken があったら次ページヘのリンク表示
-    if ($pageToken) {
-        echo '<a href="http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?parents='.urlencode($parents).'&pageToken='.urlencode($pageToken).'">次ページ</a>';
-    }
-} catch (Google_Exception $e) {
-    echo $e->getMessage();
-}
-?>
 </body>
 </html>
