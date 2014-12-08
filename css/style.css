@@ -36,7 +36,7 @@ header h1{
   font-weight: bold;
 }
 header h1:after{
-  content: "Powered by Google+API";
+  content: "Powered by Google+API･PicasaAPI";
   position: absolute;
   right: 10px;
   font-weight: normal;

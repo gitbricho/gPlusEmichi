@@ -1,3 +1,11 @@
+<?php
+$osFlag = "";
+if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
+  $osFlag = "SJIS";
+} else {
+  $osFlag = "UTF-8";
+}
+?>
 <!doctype html>
 <html lang="jp">
 <head>
@@ -38,7 +46,7 @@ $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/pub
 $emichi = json_decode(file_get_contents($url));
 $nextPage = $emichi -> {'nextPageToken'};
 foreach($emichi -> {'items'} as $data){
-  $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, "UTF-8", "ASCII,JIS,UTF-8,EUC-JP,SJIS");
+  $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS");
   break;
 }
 /*フォルダ作成*/
@@ -84,7 +92,7 @@ while($nextPage != ""){
 function gplusSave($apiData,$typeFlag,$imageDirectory){
   $returnText = "";
   foreach($apiData -> {'items'} as $data){
-    $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"),mb_convert_encoding($data -> {'updated'}, "UTF-8", "ASCII,JIS,UTF-8,EUC-JP,SJIS"));
+    $datetime = str_replace(array('T','Z','/',':',"."),array('/','','_','-',"-"),mb_convert_encoding($data -> {'updated'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS"));
     if(!empty($data -> {'object'} -> {'attachments'})){
       foreach($data -> {'object'} -> {'attachments'} as $data2){
         if(!empty($data2 -> {'image'} -> {'url'})){
@@ -92,16 +100,16 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
             $dlUrl = "images/" . $imageDirectory . "/" . $datetime . ".jpg";
             if(!file_exists($dlUrl)){
               if(!empty($data2 -> {'fullImage'} -> {'url'})){
-                $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, "UTF-8" , "ASCII,JIS,UTF-8,EUC-JP,SJIS");
+                $fullUrl = mb_convert_encoding($data2 -> {'fullImage'} -> {'url'}, $osFlag , "ASCII,JIS,UTF-8,EUC-JP,SJIS");
               }
               if($typeFlag == 1){
-                $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, "UTF-8" , "ASCII,JIS,UTF-8,EUC-JP,SJIS");
+                $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS");
                 $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
               }else{
                 
               }
               //$returnText .= $dlUrl . "の画像を保存しました<br>";
-              if(mb_convert_encoding($data2 -> {'objectType'}, "UTF-8" , "ASCII,JIS,UTF-8,EUC-JP,SJIS") == "photo"){
+              if(mb_convert_encoding($data2 -> {'objectType'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS") == "photo"){
                 $imgData = curl_init();
                 curl_setopt($imgData, CURLOPT_URL, $fullUrl);
                 curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
