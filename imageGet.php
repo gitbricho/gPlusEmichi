@@ -173,16 +173,12 @@ function picasaSave($userId,$imageDirectory){
         print "<a href='" . $imgSaveUrl . "' target='_blank'><img src='" . $imgSaveUrl . "' width=300></a>";
         $dlUrl = "images" . DIRECTORY_SEPARATOR . $imageDirectory . DIRECTORY_SEPARATOR . $datetime . "_" . $saveCount . ".jpg";
         if(!file_exists($dlUrl)){
-          /*
           $imgData = curl_init();
           curl_setopt($imgData, CURLOPT_URL, $imgSaveUrl);
           curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
           $data = curl_exec($imgData);
           file_put_contents($dlUrl, $data);
           curl_close($imgData);
-          */
-          $data = file_get_contents($dlUrl);
-          file_put_contents($imgSaveUrl,$data);
         }
         $saveCount ++;
       }
