@@ -2,7 +2,7 @@
 error_reporting(0);
 $osFlag = "";
 if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
-  $osFlag = "SJIS";
+  $osFlag = "SJIS-win";
 } else {
   $osFlag = "UTF-8";
 }
@@ -58,7 +58,7 @@ if(!file_exists($direct)){
   mkdir($direct, 0700);
 }
 ?>
-<div id="name" class="clearfix"><p id="member"><?php echo $name; ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
+<div id="name" class="clearfix"><p id="member"><?php echo mb_convert_encoding($name, "UTF-8", "ASCII,JIS,UTF-8,EUC-JP,SJIS"); ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
 <div class="Collage">
 <?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
