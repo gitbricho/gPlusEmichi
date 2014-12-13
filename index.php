@@ -30,6 +30,7 @@
     <div id="mainLeft">
     <p id="title">Who do you save?</p>
     <h2>Google+のユーザIDを入力してください。すべての画像を保存します。<br>保存は非常に時間がかかります。コーヒーなどを飲みながら気長に待ちましょう。</h2>
+    <h2>GoogleDrive認証：<a href="gDrive.php">こちら</a></h2>
     <div id="formBox">
       <form action="imageGet.php" method="post">
         <input type="text" id="userId" name="userID" value="101590036846564916771">
