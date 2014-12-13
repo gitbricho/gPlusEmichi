@@ -1,6 +1,6 @@
 
 <?php
-$version = "1.6.1";
+$version = "1.7.0";
 ?>
 <!doctype html>
 <html lang="jp">
