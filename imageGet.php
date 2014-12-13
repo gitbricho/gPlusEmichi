@@ -54,7 +54,7 @@ foreach($emichi -> {'items'} as $data){
 $imageDirectory = $name;
 $direct = "./images/" . $imageDirectory;
 if(!file_exists($direct)){
-  mkdir($direct, 0700);
+  mkdir($direct, 0777, true);
 }
 ?>
 <div id="name" class="clearfix"><p id="member"><?php echo mb_convert_encoding($name, "UTF-8", "ASCII,JIS,UTF-8,EUC-JP,SJIS"); ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
