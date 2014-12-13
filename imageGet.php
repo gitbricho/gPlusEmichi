@@ -111,7 +111,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
               }
               if($typeFlag == 1){
                 $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS");
-                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "'></a>";
+                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "' target='_blank'></a>";
               }else{
                 
               }
@@ -121,7 +121,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 curl_setopt($imgData, CURLOPT_URL, $fullUrl);
                 curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
                 $data = curl_exec($imgData);
-                file_put_contents($dlUrl, $data, FILE_APPEND | LOCK_EX);
+                file_put_contents($dlUrl, $data);
                 curl_close($imgData);
               }
             }
