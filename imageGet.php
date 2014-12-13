@@ -29,6 +29,16 @@ $(window).load(function(){
 	});
 });
 </script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41993548-8', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 <header>
@@ -43,7 +53,7 @@ $count = 0;
 $pageCount = 0;
 $maxResults = 100;
 $userId = $_POST["userID"];
-$url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
+$url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?maxResults=100&key=AIzaSyCn-Rz2fEPWXZzZZk4Q2xkBC_2MFrhkIoE";
 $emichi = json_decode(file_get_contents($url));
 $nextPage = $emichi -> {'nextPageToken'};
 foreach($emichi -> {'items'} as $data){
@@ -71,7 +81,7 @@ if($_POST["destination"] == 1){
 while($nextPage != ""){
   $pageCount ++;
   if(!empty($nextPage)){
-    $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=" . $maxResults . "&key=AIzaSyD0v2NJR22_He4zS9BzwnJQVSpSQNHSn3g";
+    $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/public?pageToken=" . $nextPage . "&maxResults=" . $maxResults . "&key=AIzaSyCn-Rz2fEPWXZzZZk4Q2xkBC_2MFrhkIoE";
   }
   $emichi = json_decode(file_get_contents($url));
   if(!empty($emichi -> {'nextPageToken'})){
