@@ -80,14 +80,14 @@ while($nextPage != ""){
   }
   if($_POST["type"] == 3){ //もっと古い画像を保存
     if($pageCount > 26){
-      //echo gplusSave($emichi,0,$imageDirectory);
+      //gplusSave($emichi,0,$imageDirectory);
     }
   }elseif($_POST["type"] == 2){ //古い画像を保存
     if($pageCount > 13){
-      //echo gplusSave($emichi,0,$imageDirectory);
+      //gplusSave($emichi,0,$imageDirectory);
     }
   }else{ //通常保存
-    //echo gplusSave($emichi,0,$imageDirectory);
+    //gplusSave($emichi,0,$imageDirectory);
   }
 }
 
@@ -124,7 +124,6 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 //curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
                 $data = curl_exec($imgData);
                 file_put_contents($dlUrl, $data);
-                var_dump(curl_getinfo($imgData));
                 curl_close($imgData);
               }
             }
