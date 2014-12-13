@@ -65,7 +65,7 @@ echo gplusSave($emichi,1,$imageDirectory);
 
 //picasa画像取得
 if($_POST["destination"] == 1){
-  picasaSave($userId,$imageDirectory);
+  echo picasaSave($userId,$imageDirectory);
 }
 
 while($nextPage != ""){
@@ -111,7 +111,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
               }
               if($typeFlag == 1){
                 $url = mb_convert_encoding($data2 -> {'image'} -> {'url'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS");
-                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "' target='_blank'></a>";
+                $returnText .= "<a href='" . $fullUrl . "'><img src='" . $url . "' target='_blank' width=200></a>";
               }else{
                 
               }
@@ -173,7 +173,7 @@ function picasaSave($userId,$imageDirectory){
         }
         $imgSaveUrl = substr($imgUrlAB, 0, -1);
         //print $imgSaveUrl;
-        print "<a href='" . $imgSaveUrl . "' target='_blank'><img src='" . $imgSaveUrl . "' width=300></a>";
+        $returnText .= "<a href='" . $imgSaveUrl . "' target='_blank'><img src='" . $imgSaveUrl . "' width=200></a>";
         $dlUrl = "images" . DIRECTORY_SEPARATOR . $imageDirectory . DIRECTORY_SEPARATOR . $datetime . "_" . $saveCount . ".jpg";
         if(!file_exists($dlUrl)){
           /*
@@ -191,7 +191,7 @@ function picasaSave($userId,$imageDirectory){
       }
     }
   }
-  return null;
+  return $returnText;
 }
 ?>
 </div>
