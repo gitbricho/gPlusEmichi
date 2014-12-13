@@ -1,3 +1,5 @@
+@import "compass";
+
 .clearfix:after {  
   content: ".";   
   display: block;   
@@ -15,36 +17,36 @@
 
 html{
   background: #2d2d2d; /* Old browsers */
-background: -moz-linear-gradient(top,  #2d2d2d 24%, #005991 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(24%,#2d2d2d), color-stop(100%,#005991)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #2d2d2d 24%,#005991 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #2d2d2d 24%,#005991 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #2d2d2d 24%,#005991 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #2d2d2d 24%,#005991 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2d2d', endColorstr='#005991',GradientType=0 ); /* IE6-9 */
+  background: -moz-linear-gradient(top,  #2d2d2d 24%, #005991 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(24%,#2d2d2d), color-stop(100%,#005991)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #2d2d2d 24%,#005991 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #2d2d2d 24%,#005991 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #2d2d2d 24%,#005991 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #2d2d2d 24%,#005991 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2d2d', endColorstr='#005991',GradientType=0 ); /* IE6-9 */
   color: #fff;
   min-height: 100%;
   font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 }
 header{
   background: #0af;
-}
-header h1{
-  font-size: 90%;
-  padding: 10px;
-  line-height: 1.1em;
-  font-weight: bold;
-}
-header h1:after{
-  content: "Powered by Google+API･PicasaAPI";
-  position: absolute;
-  right: 10px;
-  font-weight: normal;
-  font-size: 80%;
-}
-header h1 a{
-  color: #fff;
-  text-decoration: none;
+  h1{
+    font-size: 90%;
+    padding: 10px;
+    line-height: 1.1em;
+    font-weight: bold;
+    &:after{
+      content: "Powered by Google+API･PicasaAPI";
+      position: absolute;
+      right: 10px;
+      font-weight: normal;
+      font-size: 80%;
+    }
+    a{
+      color: #fff;
+      text-decoration: none;
+    }
+  }
 }
 #cover{
   background-image: url("../images/cover.jpg");
@@ -99,72 +101,72 @@ h2{
 #type{
   margin: 0 auto;
   width: 575px;
-}
-#type input{
-  display: none;
-}
-#type label{
-  display: block;
-  float: left;
-  cursor: pointer;
-  width: 180px;
-  margin: 15px 0 0 0;
-  padding: 12px 5px;
-  border-right: 1px solid #abb2b7;
-  background: rgba(200,200,200,0.8);
-  color: #555e64;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1;
-  transition: .2s;
-}
-#type label:first-of-type{
-  border-radius: 3px 0 0 3px;
-}
-#type label:last-of-type{
-  border-right: 0px;
-  border-radius: 0 3px 3px 0;
-}
-#type input[type="radio"]:checked + label {
-  background: rgba(0,150,255,0.7);
-  color: #fff;
-  font-weight: bold;
-  text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+  input{
+    display: none;
+  }
+  label{
+    display: block;
+    float: left;
+    cursor: pointer;
+    width: 180px;
+    margin: 15px 0 0 0;
+    padding: 12px 5px;
+    border-right: 1px solid #abb2b7;
+    background: rgba(200,200,200,0.8);
+    color: #555e64;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1;
+    transition: .2s;
+    &:first-of-type{
+      border-radius: 3px 0 0 3px;
+    }
+    &:last-of-type{
+      border-right: 0px;
+      border-radius: 0 3px 3px 0;
+    }
+  }
+  input[type="radio"]:checked + label {
+    background: rgba(0,150,255,0.7);
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+  }
 }
 #type2{
   margin: 0 auto;
   width: 575px;
-}
-#type2 input{
-  display: none;
-}
-#type2 label{
-  display: block;
-  float: left;
-  cursor: pointer;
-  width: 275px;
-  margin: 15px 0 0 0;
-  padding: 12px 5px;
-  border-right: 1px solid #abb2b7;
-  background: rgba(200,200,200,0.8);
-  color: #555e64;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1;
-  transition: .2s;
-}
-#type2 label:first-of-type{
-  border-radius: 3px 0 0 3px;
-}
-#type2 label:last-of-type{
-  border-right: 0px;
-  border-radius: 0 3px 3px 0;
-}
-#type2 input[type="radio"]:checked + label {
-  background: rgba(0,220,100,0.7);
-  color: #fff;
-  font-weight: bold;
-  text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+  input{
+    display: none;
+  }
+  label{
+    display: block;
+    float: left;
+    cursor: pointer;
+    width: 275px;
+    margin: 15px 0 0 0;
+    padding: 12px 5px;
+    border-right: 1px solid #abb2b7;
+    background: rgba(200,200,200,0.8);
+    color: #555e64;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1;
+    transition: .2s;
+    &:first-of-type{
+      border-radius: 3px 0 0 3px;
+    }
+    &:last-of-type{
+      border-right: 0px;
+      border-radius: 0 3px 3px 0;
+    }
+  }
+  input[type="radio"]:checked + label {
+    background: rgba(0,220,100,0.7);
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
+  }
 }
 #saveBt{
   width: 400px;
@@ -177,18 +179,18 @@ h2{
   border: 0;
   box-shadow: 0 0 5px #000;
   margin: 30px auto 0 auto;
-}
-#saveBt a{
-  display: block;
-  color: #fff;
-  text-decoration: none;
+  a{
+    display: block;
+    color: #fff;
+    text-decoration: none;
+  }
 }
 #mainRight{
   width: 30%;
   float: left;
-}
-#mainRight img{
-  width: 100%;
+  img{
+    width: 100%;
+  }
 }
 #name{
   padding: 5px;
@@ -218,9 +220,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002d2d2d', e
   box-sizing: border-box;
   position: fixed;
   bottom: 0;
-}
-footer p{
-  font-size: 70%;
-  text-align: right;
-  text-shadow: 0 0 1px #000,0 0 1px #000,0 0 2px #000,0 0 5px #fff;
+  p{
+    font-size: 70%;
+    text-align: right;
+    text-shadow: 0 0 1px #000,0 0 1px #000,0 0 2px #000,0 0 5px #fff;
+  }
 }
