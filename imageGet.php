@@ -121,7 +121,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 $imgData = curl_init();
                 curl_setopt($imgData, CURLOPT_URL, $fullUrl);
                 curl_setopt($imgData, CURLOPT_HEADER, true);
-                curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+                //curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
                 $data = curl_exec($imgData);
                 file_put_contents($dlUrl, $data);
                 var_dump(curl_getinfo($imgData));
@@ -178,7 +178,7 @@ function picasaSave($userId,$imageDirectory){
           $imgData = curl_init();
           curl_setopt($imgData, CURLOPT_URL, $imgSaveUrl);
           curl_setopt($imgData, CURLOPT_HEADER, true);
-          curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
+          //curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
           $data = curl_exec($imgData);
           file_put_contents($dlUrl, $data);
           curl_close($imgData);
