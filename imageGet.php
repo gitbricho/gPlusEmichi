@@ -120,7 +120,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
               if(mb_convert_encoding($data2 -> {'objectType'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS") == "photo"){
                 $imgData = curl_init();
                 curl_setopt($imgData, CURLOPT_URL, $fullUrl);
-                curl_setopt($imgData, CURLOPT_HEADER, true);
+                curl_setopt($imgData, CURLOPT_HEADER, 'Content-type: image/jpeg');
                 //curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
                 $data = curl_exec($imgData);
                 file_put_contents($dlUrl, $data);
