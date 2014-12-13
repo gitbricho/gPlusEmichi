@@ -1,3 +1,7 @@
+
+<?php
+$version = "1.4.1";
+?>
 <!doctype html>
 <html lang="jp">
 <head>
@@ -22,6 +26,9 @@
 </script>
 </head>
 <body>
+<div id="version">
+  <p>バージョン<?php echo $version; ?></p>
+</div>
 <header>
   <h1><a href="index.php">えみちの画像 一気に保存します!<br><small>（メンバーのGoogle+の画像 一気に保存しちゃいます！）</small></a></h1>
 </header>
