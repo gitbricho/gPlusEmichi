@@ -184,7 +184,7 @@ function picasaSave($userId,$imageDirectory){
           file_put_contents($dlUrl, $data);
           curl_close($imgData);
           */
-          $dataImg = file_get_contents($fullUrl);
+          $dataImg = file_get_contents($imgSaveUrl);
           file_put_contents($dlUrl, $dataImg);
         }
         $saveCount ++;
