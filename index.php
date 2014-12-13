@@ -1,6 +1,6 @@
 
 <?php
-$version = "1.4.1";
+$version = "1.6.1";
 ?>
 <!doctype html>
 <html lang="jp">
@@ -36,7 +36,7 @@ $version = "1.4.1";
   <div id="cover" class="clearfix">
     <div id="mainLeft">
     <p id="title">Who do you save?</p>
-    <h2>Google+のユーザIDを入力してください。すべての画像を保存します。<br>保存は非常に時間がかかります。コーヒーなどを飲みながら気長に待ちましょう。</h2>
+    <h2>Google+のユーザIDを入力してください。画像を保存します（数回やると完璧に保存します）。<br>保存は非常に時間がかかります。コーヒーなどを飲みながら気長に待ちましょう。</h2>
     <!--<h2>GoogleDrive認証：<a href="gDrive.php">こちら</a></h2>-->
     <div id="formBox">
       <form action="imageGet.php" method="post">
