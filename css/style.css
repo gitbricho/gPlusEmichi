@@ -98,10 +98,11 @@ header h1 a {
 /* line 68, ../sass/style.scss */
 #mainLeft {
   width: 70%;
+  height: 600px;
   float: left;
 }
 
-/* line 72, ../sass/style.scss */
+/* line 73, ../sass/style.scss */
 #title {
   background: -moz-linear-gradient(left, rgba(45, 45, 45, 0) 0%, rgba(36, 36, 36, 0.6) 20%, rgba(9, 9, 9, 0.6) 80%, transparent 100%);
   /* FF3.6+ */
@@ -126,7 +127,7 @@ header h1 a {
   font-family: 'Poiret One', cursive;
 }
 
-/* line 88, ../sass/style.scss */
+/* line 89, ../sass/style.scss */
 h2 {
   text-align: center;
   font-weight: bold;
@@ -134,12 +135,12 @@ h2 {
   font-size: 105%;
 }
 
-/* line 94, ../sass/style.scss */
+/* line 95, ../sass/style.scss */
 #formBox {
   text-align: center;
 }
 
-/* line 97, ../sass/style.scss */
+/* line 98, ../sass/style.scss */
 #default {
   text-align: center;
   font-weight: bold;
@@ -147,7 +148,7 @@ h2 {
   font-size: 80%;
 }
 
-/* line 103, ../sass/style.scss */
+/* line 104, ../sass/style.scss */
 #userId {
   width: 300px;
   margin: 15px 0 0 0;
@@ -158,16 +159,16 @@ h2 {
   border: 2px solid #aaa;
 }
 
-/* line 112, ../sass/style.scss */
+/* line 113, ../sass/style.scss */
 #type {
   margin: 0 auto;
   width: 575px;
 }
-/* line 115, ../sass/style.scss */
+/* line 116, ../sass/style.scss */
 #type input {
   display: none;
 }
-/* line 118, ../sass/style.scss */
+/* line 119, ../sass/style.scss */
 #type label {
   display: block;
   float: left;
@@ -183,16 +184,16 @@ h2 {
   line-height: 1;
   transition: .2s;
 }
-/* line 132, ../sass/style.scss */
+/* line 133, ../sass/style.scss */
 #type label:first-of-type {
   border-radius: 3px 0 0 3px;
 }
-/* line 135, ../sass/style.scss */
+/* line 136, ../sass/style.scss */
 #type label:last-of-type {
   border-right: 0px;
   border-radius: 0 3px 3px 0;
 }
-/* line 140, ../sass/style.scss */
+/* line 141, ../sass/style.scss */
 #type input[type="radio"]:checked + label {
   background: rgba(0, 150, 255, 0.7);
   color: #fff;
@@ -200,16 +201,16 @@ h2 {
   text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
 }
 
-/* line 147, ../sass/style.scss */
+/* line 148, ../sass/style.scss */
 #type2 {
   margin: 0 auto;
   width: 575px;
 }
-/* line 150, ../sass/style.scss */
+/* line 151, ../sass/style.scss */
 #type2 input {
   display: none;
 }
-/* line 153, ../sass/style.scss */
+/* line 154, ../sass/style.scss */
 #type2 label {
   display: block;
   float: left;
@@ -225,16 +226,16 @@ h2 {
   line-height: 1;
   transition: .2s;
 }
-/* line 167, ../sass/style.scss */
+/* line 168, ../sass/style.scss */
 #type2 label:first-of-type {
   border-radius: 3px 0 0 3px;
 }
-/* line 170, ../sass/style.scss */
+/* line 171, ../sass/style.scss */
 #type2 label:last-of-type {
   border-right: 0px;
   border-radius: 0 3px 3px 0;
 }
-/* line 175, ../sass/style.scss */
+/* line 176, ../sass/style.scss */
 #type2 input[type="radio"]:checked + label {
   background: rgba(0, 220, 100, 0.7);
   color: #fff;
@@ -242,7 +243,7 @@ h2 {
   text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 1px #000;
 }
 
-/* line 182, ../sass/style.scss */
+/* line 183, ../sass/style.scss */
 #saveBt {
   width: 400px;
   padding: 10px;
@@ -255,30 +256,32 @@ h2 {
   box-shadow: 0 0 5px #000;
   margin: 30px auto 0 auto;
 }
-/* line 193, ../sass/style.scss */
+/* line 194, ../sass/style.scss */
 #saveBt a {
   display: block;
   color: #fff;
   text-decoration: none;
 }
 
-/* line 199, ../sass/style.scss */
+/* line 200, ../sass/style.scss */
 #mainRight {
   width: 30%;
+  height: 600px;
   float: left;
 }
-/* line 202, ../sass/style.scss */
+/* line 204, ../sass/style.scss */
 #mainRight img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-/* line 206, ../sass/style.scss */
+/* line 209, ../sass/style.scss */
 #name {
   padding: 5px;
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* line 210, ../sass/style.scss */
+/* line 213, ../sass/style.scss */
 #member {
   float: left;
   width: 250px;
@@ -286,14 +289,14 @@ h2 {
   font-size: 110%;
 }
 
-/* line 216, ../sass/style.scss */
+/* line 219, ../sass/style.scss */
 #nameChyui {
   float: left;
   width: 800px;
   font-size: 70%;
 }
 
-/* line 221, ../sass/style.scss */
+/* line 224, ../sass/style.scss */
 footer {
   padding: 5px;
   background: -moz-linear-gradient(left, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0) 24%, rgba(24, 24, 24, 0) 60%, rgba(0, 0, 0, 0.5) 100%);
@@ -315,7 +318,7 @@ footer {
   position: fixed;
   bottom: 0;
 }
-/* line 234, ../sass/style.scss */
+/* line 237, ../sass/style.scss */
 footer p {
   font-size: 70%;
   text-align: right;
