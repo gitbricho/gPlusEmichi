@@ -117,6 +117,7 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
               }
               //$returnText .= $dlUrl . "の画像を保存しました<br>";
               if(mb_convert_encoding($data2 -> {'objectType'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS") == "photo"){
+                /*
                 $imgData = curl_init();
                 curl_setopt($imgData, CURLOPT_URL, $fullUrl);
                 curl_setopt($imgData, CURLOPT_RETURNTRANSFER, true);
@@ -124,6 +125,9 @@ function gplusSave($apiData,$typeFlag,$imageDirectory){
                 var_dump($data);
                 file_put_contents($dlUrl, $data);
                 curl_close($imgData);
+                */
+                $dataImg = file_get_contents($fullUrl);
+                file_put_contents($dlUrl, $dataImg);
               }
             }
           }
