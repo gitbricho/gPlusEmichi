@@ -30,7 +30,7 @@
     <div id="mainLeft">
     <p id="title">Who do you save?</p>
     <h2>Google+のユーザIDを入力してください。すべての画像を保存します。<br>保存は非常に時間がかかります。コーヒーなどを飲みながら気長に待ちましょう。</h2>
-    <h2>GoogleDrive認証：<a href="gDrive.php">こちら</a></h2>
+    <!--<h2>GoogleDrive認証：<a href="gDrive.php">こちら</a></h2>-->
     <div id="formBox">
       <form action="imageGet.php" method="post">
         <input type="text" id="userId" name="userID" value="101590036846564916771">
@@ -49,8 +49,14 @@
           <input type="radio" name="destination" id="select5" value="2">
           <label for="select5">Google+のみ取得する<br><small>複数写真のアルバムは取得しません</small></label>
         </div>
-        
-        <input type="submit" id="saveBt" value="画像保存！">
+        <?php
+        if (isset($_SESSION['token'])) { //Drive認証check
+          //echo '<p id="saveBt"><a href="gDrive.php">GoogleDriveの認証をしてください</a><p>';
+          echo '<input type="submit" id="saveBt" value="画像保存！">';
+        }else{
+          echo '<input type="submit" id="saveBt" value="画像保存！">';
+        }
+        ?>
       </form>
     </div>
     </div>
