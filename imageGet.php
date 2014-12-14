@@ -23,12 +23,15 @@ if (PHP_OS == "WIN32" || PHP_OS == "WINNT") {
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="js/jquery.collagePlus.min.js"></script>
 <script type="text/javascript">
+/*
 $(window).load(function(){
 	$('.Collage').collagePlus({
 		'effect' : 'effect-5',
 	});
 });
+*/
 </script>
+<!--
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -39,6 +42,7 @@ $(window).load(function(){
   ga('send', 'pageview');
 
 </script>
+-->
 </head>
 <body>
 <header>
