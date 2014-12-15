@@ -62,17 +62,16 @@ $url = "https://www.googleapis.com/plus/v1/people/" . $userId . "/activities/pub
 $emichi = json_decode(file_get_contents($url));
 $nextPage = $emichi -> {'nextPageToken'};
 foreach($emichi -> {'items'} as $data){
-  $name = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS");
+  $imageDirectory = mb_convert_encoding($data -> {'actor'} -> {'displayName'}, $osFlag, "ASCII,JIS,UTF-8,EUC-JP,SJIS");
   break;
 }
 /*フォルダ作成*/
-$imageDirectory = $name;
 $direct = "./images/" . $imageDirectory;
 if(!file_exists($direct)){
-  mkdir($direct, 0777, true);
+  mkdir($direct, 0700);
 }
 ?>
-<div id="name" class="clearfix"><p id="member"><?php echo mb_convert_encoding($name, "UTF-8", "ASCII,JIS,UTF-8,EUC-JP,SJIS"); ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
+<div id="name" class="clearfix"><p id="member"><?php echo mb_convert_encoding($imageDirectory, "UTF-8", "ASCII,JIS,UTF-8,EUC-JP,SJIS"); ?>の画像を保存！</p><p id="nameChyui">全件を取得できない場合があります。その際は数回試してみるか、古い写真を取得するオプションなどを選択してください。<br>保存は全件していますが、画面上では全ての画像を表示していません。</p></div>
 <div class="Collage">
 <?php
 /*1回目呼び出し（最新画像100件･表示あり）*/
